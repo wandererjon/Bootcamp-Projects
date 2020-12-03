@@ -25,15 +25,19 @@ The main purpose of this network is to expose a load-balanced and monitored inst
 Load balancing ensures that the application will be highly available, in addition to restricting traffic to the network.
 
 - What aspect of security do load balancers protect? 
+
   **Load Balancers can help protect against distributed denial of service (DDOS) attacks by rerouting the malicious traffic.**
 - What is the advantage of a jump box?
+
   **The largest advantage a jump box provides is that it gives administrative users a secure place to operate.**
 
 Integrating an ELK server allows users to easily monitor the vulnerable VMs for changes to the server and system logs.
 
 - What does Filebeat watch for?
+
   **Filebeat watches for logs files and events.**
 - What does Metricbeat record
+
   **Metricbeat records the container's performance metrics, such as system and service statistics.**
 
 The configuration details of each machine may be found below.
@@ -52,14 +56,19 @@ The machines on the internal network are not exposed to the public Internet.
 
 Only the Jump-Box-Provisioner machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
 
+
 - **68.231.42.98**
 
 Machines within the network can only be accessed by SSH.
 
 - Which machine did you allow to access your ELK VM? 
+
   **Web-1**
+  
 - What was its IP address?
+
   **10.0.0.7**
+  
 
 A summary of the access policies in place can be found in the table below.
 
@@ -74,41 +83,54 @@ A summary of the access policies in place can be found in the table below.
 
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
 
+
 - **The main advantage of automating configuration with Ansible is the fact you don't have to install anything else on the systems you're looking to automate.** 
+
 
 The playbook implements the following tasks:
 
+
 - **Step 1: Gain access to the Jump-Box-Provisioner using SSH** 
+
 
   ```bash
   $ ssh azadmin@104.42.182.163
   ```
 
+
 - **Step 2: Gain access into the container**
+
 
   ```bash
   azadmin@Jump-Box-Provisioner:~$ sudo docker start zealous_tereshkova
   azadmin@Jump-Box-Provisioner:~$ sudo docker attach zealous_tereshkova
   ```
 
+
 - **Step 3: Run the YML**
+
 
   ```bash
   root@a61a15fa853f:~# cd /etc/ansible/
   root@a61a15fa853f:/etc/ansible# ansible-playbook install-elk.yml
   ```
 
+
 - **Step 4: Gain access to the ELK-VM**
+
 
   ```bash
   root@a61a15fa853f:/etc/ansible# ssh azadmin@10.1.0.5
   ```
 
+
 - **Step 5: Running docker ps**
+
 
   ```bash
   azadmin@ELK-VM:~$ sudo docker ps
   ```
+
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
@@ -121,23 +143,33 @@ The following screenshot displays the result of running `docker ps` after succes
 This ELK server is configured to monitor the following machines:
 
 - List the IP addresses of the machines you are monitoring
+
   **Web-1; 104.42.182.163**
+  
   **Web-2; 104.42.182.163**
+  
 
 We have installed the following Beats on these machines:
 
 - Specify which Beats you successfully installed
+
   **Filebeat & Metricbeat**
+  
 
 These Beats allow us to collect the following information from each machine:
 
 - In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see.
+
 - **Filebeat:**
+
   **The type of data that's collected by Filebeat is log data.**
+  
   ![Filebeat.png](https://github.com/wandererjon/Bootcamp-Projects/blob/main/Diagrams/Filebeat.png?raw=true)
 
 - **Metricbeat:**
+
   **The type of data that's collected by Metricbeat is monitoring data.**
+  
   ![metricbeat.png](https://github.com/wandererjon/Bootcamp-Projects/blob/main/Diagrams/metricbeat.png?raw=true)
 
 ### Using the Playbook
@@ -153,13 +185,23 @@ SSH into the control node and follow the steps below:
 Answer the following questions to fill in the blanks:
 
 - Which file is the playbook?
+
   **`filebeat-playbook.yml`  
   `metricbeat-playbook.yml`** 
+  
 - Where do you copy it?  
+
   **`/etc/ansible/roles`**
-- Which file do you update to make Ansible run the playbook on a specific machine? ****
+  
+- Which file do you update to make Ansible run the playbook on a specific machine? 
+
   **`/etc/ansible/hosts`**
+  
 - How do I specify which machine to install the ELK server on versus which to install Filebeat on?
+
   **in the `/etc/ansible/hosts` file you specify using headers such as [elkservers].**
+  
 - Which URL do you navigate to in order to check that the ELK server is running?
+
   http://13.82.143.139:5601/app/kibana
+  
